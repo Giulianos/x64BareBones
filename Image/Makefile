@@ -1,7 +1,7 @@
 BOOTLOADER_PATH=../Bootloader
 BMFS=$(BOOTLOADER_PATH)/BMFS/bmfs.bin
 MBR=$(BOOTLOADER_PATH)/Pure64/bmfs_mbr.sys
-MP=../Toolchain/ModulePacker/mp.bin
+MP=mp
 PURE64=$(BOOTLOADER_PATH)/Pure64/pure64.sys
 OSIMAGENAME=x64BareBonesImage
 VMDK=$(OSIMAGENAME).vmdk
@@ -9,6 +9,7 @@ QCOW2=$(OSIMAGENAME).qcow2
 IMG=$(OSIMAGENAME).img
 KERNEL=../Kernel/kernel.bin
 USERLAND=../Userland/0000-sampleCodeModule.bin ../Userland/0001-sampleDataModule.bin
+KERNEL_PACKING_SPEC=packing_spec.yaml
 
 PACKEDKERNEL=packedKernel.bin
 IMGSIZE=6291456
@@ -19,7 +20,7 @@ $(KERNEL):
 	cd ../Kernel; make
 
 $(PACKEDKERNEL): $(KERNEL) $(USERLAND)
-	$(MP) $(KERNEL) $(USERLAND) -o $(PACKEDKERNEL)
+	$(MP) -spec=$(KERNEL_PACKING_SPEC)
 
 $(IMG): $(BMFS) $(MBR) $(PURE64) $(PACKEDKERNEL)
 	$(BMFS) $(IMG) initialize $(IMGSIZE) $(MBR) $(PURE64) $(PACKEDKERNEL) 

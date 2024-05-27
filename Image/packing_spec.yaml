@@ -1,0 +1,9 @@
+target_path: "packedKernel.bin"
+kernel_path: "../Kernel/kernel.bin"
+modules:
+  - path: "../Userland/0000-sampleCodeModule.bin"
+    attributes:
+      name: "sampleCodeModule"
+  - path: "../Userland/0001-sampleDataModule.bin"
+    attributes:
+      name: "sampleDataModule"
